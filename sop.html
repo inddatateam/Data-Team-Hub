@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SOP Zendesk | Data Team Hub</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="ind-theme.css" />
+  </head>
+  <body>
+    <main class="sop-page">
+      <a class="back-link" href="index.html">&#8592; Data Team Hub</a>
+      <header class="sop-page-header"><p class="eyebrow">IND Technology / Team reference</p><h1>SOP Zendesk</h1></header>
+      <section class="sop-section" aria-label="SOP documents">
+        <div class="section-heading"><h3>Procedures & guides</h3><span id="sopCount"></span></div>
+        <label class="search-box sop-search">Search<input id="sopSearch" type="search" placeholder="Search SOPs..." /></label>
+        <div class="sop-list" id="sopList"></div>
+        <p id="sopEmpty" hidden>No matching SOPs.</p>
+      </section>
+    </main>
+    <dialog class="resource-dialog" id="resourceDialog">
+      <form id="resourceForm">
+        <div class="dialog-header"><h3>Update document link</h3><button class="icon-button" type="button" id="closeDialogButton" aria-label="Close dialog">&#215;</button></div>
+        <label>Name<input name="name" required /></label>
+        <label>Category<select name="category"><option>Docs</option><option>Power BI</option><option>Excel</option><option>Data Sources</option><option>Automation</option></select></label>
+        <label>Document link<input name="url" type="url" required placeholder="https://..." /></label>
+        <label>Word desktop file address (optional)<input name="wordUrl" type="url" placeholder="https://company.sharepoint.com/.../document.docx" /></label>
+        <p class="save-note">For Open in Word, use the original SharePoint file address from Word's File / Info / Copy Path. Word must be installed and signed in.</p>
+        <label>Owner<input name="owner" /></label>
+        <label>Description<textarea name="description" rows="2"></textarea></label>
+        <label>Tags<input name="tags" /></label>
+        <div class="dialog-actions"><button class="secondary-button" type="button" id="resetResourcesButton">Restore shared links</button><button class="primary-button" type="submit">Save link</button></div>
+        <p class="save-note">Links saved here stay in this browser. Export shared links to update the team's published hub.</p>
+      </form>
+    </dialog>
+    <footer class="hub-footer"><span>IND Technology / Data Team</span><button class="secondary-button" id="exportLinksButton" type="button">Export shared links</button></footer>
+    <script src="resources.generated.js"></script>
+    <script src="sop.resources.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

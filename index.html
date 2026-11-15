@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Data Team Hub</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="ind-theme.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Data Team Hub navigation">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div>
+            <p class="eyebrow">IND Technology</p>
+            <h1>Data Team Hub</h1>
+          </div>
+        </div>
+
+        <nav class="nav-list" aria-label="Hub sections">
+          <a class="nav-item active" href="#overview" data-section-link="overview">
+            <span class="icon" aria-hidden="true">⌂</span>
+            Home
+          </a>
+          <a class="nav-item" href="#power-bi" data-section-link="Power BI">
+            <span class="icon" aria-hidden="true">▥</span>
+            Power BI
+          </a>
+          <a class="nav-item" href="#excel" data-section-link="Excel">
+            <span class="icon" aria-hidden="true">▦</span>
+            Excel Files
+          </a>
+          <a class="nav-item" href="#data-sources" data-section-link="Data Sources">
+            <span class="icon" aria-hidden="true">◍</span>
+            Data Sources
+          </a>
+          <a class="nav-item" href="#docs" data-section-link="Docs">
+            <span class="icon" aria-hidden="true">☰</span>
+            Documents
+          </a>
+          <a class="nav-item" href="sop.html">
+            <span class="icon" aria-hidden="true">&#9783;</span>
+            SOP Zendesk
+          </a>
+          <a class="nav-item" href="https://indthandbook.com/login/" target="_blank" rel="noopener noreferrer">
+            <span class="icon" aria-hidden="true">&#9782;</span>
+            Employee Handbook
+          </a>
+        </nav>
+
+        <div class="sidebar-note">
+          <p>IND Technology</p>
+          <span>Data team workspace</span>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Data operations</p>
+            <h2>Data Team Hub</h2>
+          </div>
+          <button class="primary-button" type="button" id="addResourceButton">
+            <span aria-hidden="true">＋</span>
+            Add resource
+          </button>
+        </header>
+
+        <section class="hero-panel" id="overview" aria-label="Hub overview">
+          <div class="hero-copy">
+            <p class="status-pill">IND / DATA TEAM</p>
+            <h3>Data team's everyday workspace.</h3>
+          </div>
+          <div class="quick-stats" aria-label="Hub summary">
+            <article>
+              <span id="totalResources">0</span>
+              <p>Resources</p>
+            </article>
+            <article>
+              <span id="powerBiCount">0</span>
+              <p>Power BI</p>
+            </article>
+            <article>
+              <span id="excelCount">0</span>
+              <p>Excel</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="tool-strip" aria-label="Daily tools and dashboards">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Start here</p>
+              <h3>Weekly workspace</h3>
+            </div>
+            <span id="featuredCount">0 shortcuts</span>
+          </div>
+          <div class="tool-grid" id="featuredGrid"></div>
+        </section>
+
+        <section class="toolbar" aria-label="Search and filters">
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input id="searchInput" type="search" placeholder="Search by report, owner, team, tag..." />
+          </label>
+          <div class="filter-tabs" role="tablist" aria-label="Resource category filters" id="filterTabs"></div>
+        </section>
+
+        <section class="content-grid">
+          <div class="resource-area">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Library</p>
+                <h3>Team resources</h3>
+              </div>
+              <span id="resultCount">0 items</span>
+            </div>
+            <div class="resource-grid" id="resourceGrid" aria-live="polite"></div>
+            <div class="empty-state" id="emptyState" hidden>
+              <h3>No matching resources</h3>
+              <p>Try a different keyword or add the first link for this category.</p>
+            </div>
+          </div>
+
+          <aside class="side-panel" aria-label="Pinned team information">
+            <section>
+              <div class="section-heading compact">
+                <div>
+                  <p class="eyebrow">Pinned</p>
+                  <h3>Quick access</h3>
+                </div>
+              </div>
+              <div class="quick-links" id="quickLinks"></div>
+            </section>
+
+            <section>
+              <div class="section-heading compact">
+                <div>
+                  <p class="eyebrow">Team</p>
+                  <h3>Working together</h3>
+                </div>
+              </div>
+              <ul class="contact-list">
+                <li>
+                  <span>Weekly meeting</span>
+                  <p>Minutes & team priorities</p>
+                </li>
+                <li>
+                  <span>Reporting</span>
+                  <p>Dashboards & checklists</p>
+                </li>
+                <li>
+                  <span>Resources</span>
+                  <p>Tools, files & reference material</p>
+                </li>
+              </ul>
+            </section>
+          </aside>
+        </section>
+      </main>
+    </div>
+
+    <dialog class="resource-dialog" id="resourceDialog">
+      <form method="dialog" id="resourceForm">
+        <div class="dialog-header">
+          <div>
+            <p class="eyebrow">New item</p>
+            <h3>Add resource</h3>
+          </div>
+          <button class="icon-button" type="button" id="closeDialogButton" aria-label="Close dialog">×</button>
+        </div>
+
+        <label>
+          Name
+          <input name="name" required placeholder="Sales Performance Dashboard" />
+        </label>
+        <label>
+          Category
+          <select name="category" required>
+            <option>Power BI</option>
+            <option>Excel</option>
+            <option>Data Sources</option>
+            <option>Docs</option>
+            <option>Automation</option>
+          </select>
+        </label>
+        <label>
+          Document or report link
+          <input name="url" type="url" required placeholder="https://..." />
+        </label>
+        <label>
+          Owner
+          <input name="owner" placeholder="Data Team" />
+        </label>
+        <label>
+          Description
+          <textarea name="description" rows="3" placeholder="What this resource is for"></textarea>
+        </label>
+        <label>
+          Tags
+          <input name="tags" placeholder="sales, weekly, source" />
+        </label>
+        <div class="dialog-actions">
+          <button class="secondary-button" type="button" id="resetResourcesButton">Restore shared links</button>
+          <button class="primary-button" type="submit">Save resource</button>
+        </div>
+        <p class="save-note">Links saved here stay in this browser. Export shared links to update the team's published hub.</p>
+      </form>
+    </dialog>
+
+    <footer class="hub-footer"><span>IND Technology / Data Team</span><button class="secondary-button" id="exportLinksButton" type="button">Export shared links</button></footer>
+
+    <script src="resources.generated.js"></script>
+    <script src="sop.resources.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
