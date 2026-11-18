@@ -115,7 +115,8 @@ function mergeResources(primaryResources, secondaryResources) {
     byKey.set(key, {
       ...generated,
       ...resource,
-      url: resource.url && resource.url !== "#" ? resource.url : generated.url || "#",
+      url: generated.internal ? generated.url : resource.url && resource.url !== "#" ? resource.url : generated.url || "#",
+      internal: resource.internal ?? generated.internal,
       featured: resource.featured ?? generated.featured,
       pinned: resource.pinned ?? generated.pinned
     });
@@ -182,7 +183,7 @@ function renderFeatured() {
       const hasLink = resource.url && resource.url !== "#";
       const resourceKey = getResourceKey(resource);
       const action = hasLink
-        ? `<a class="tool-action" href="${escapeAttribute(resource.url)}" target="_blank" rel="noreferrer">Open</a>`
+        ? `<a class="tool-action" href="${escapeAttribute(resource.url)}"${linkTarget(resource)}>Open</a>`
         : `<button class="tool-action missing-link-button" type="button" data-resource-key="${escapeAttribute(resourceKey)}">Add link</button>`;
 
       return `
@@ -230,7 +231,7 @@ function renderCards() {
           <div class="tag-row">${tags}</div>
           ${
             hasLink
-              ? `<a class="open-link" href="${escapeAttribute(resource.url)}" target="_blank" rel="noreferrer">Open</a>`
+              ? `<a class="open-link" href="${escapeAttribute(resource.url)}"${linkTarget(resource)}>Open</a>`
               : `<button class="open-link missing-link-button" type="button" data-resource-key="${escapeAttribute(resourceKey)}">Add link</button>`
           }
         </article>
@@ -247,7 +248,7 @@ function renderQuickLinks() {
       (resource) => {
         const hasLink = resource.url && resource.url !== "#";
         const tag = hasLink ? "a" : "button";
-        const href = hasLink ? `href="${escapeAttribute(resource.url)}" target="_blank" rel="noreferrer"` : `type="button" data-resource-key="${escapeAttribute(getResourceKey(resource))}"`;
+        const href = hasLink ? `href="${escapeAttribute(resource.url)}"${linkTarget(resource)}` : `type="button" data-resource-key="${escapeAttribute(getResourceKey(resource))}"`;
 
         return `
           <${tag} class="quick-link ${hasLink ? "" : "missing-link-button"}" ${href}>
@@ -307,6 +308,11 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+// Pages inside the hub (e.g. customers.html) open in the same tab; external links open a new tab.
+function linkTarget(resource) {
+  return resource.internal ? "" : ' target="_blank" rel="noreferrer"';
 }
 
 function escapeAttribute(value) {

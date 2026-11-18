@@ -78,10 +78,11 @@
   {
     name: "Customer Management Spreadsheet",
     category: "Data Sources",
-    url: "https://indtechnologyinc.sharepoint.com/:f:/s/IND.TDataTeam/IgCacGykfN2BT7rEtGzjJQDrAZEXMq6MBSueb5pKNMxpy8A?e=piZfDo",
+    url: "customer_management.html",
+    internal: true,
     owner: "Data Team",
-    description: "Top-level OneDrive folder for customer unit installed management.",
-    tags: ["folder", "customers"],
+    description: "List of customer unit installed management spreadsheets.",
+    tags: ["customers", "excel", "management"],
     pinned: false
   },
   {

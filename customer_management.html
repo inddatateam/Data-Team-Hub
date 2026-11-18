@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Customer Management Spreadsheet | Data Team Hub</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="ind-theme.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Data Team Hub navigation">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div>
+            <p class="eyebrow">IND Technology</p>
+            <h1>Data Team Hub</h1>
+          </div>
+        </div>
+
+        <nav class="nav-list" aria-label="Hub sections">
+          <a class="nav-item" href="index.html">
+            <span class="icon" aria-hidden="true">⌂</span>
+            Home
+          </a>
+          <a class="nav-item" href="index.html#power-bi">
+            <span class="icon" aria-hidden="true">▥</span>
+            Power BI
+          </a>
+          <a class="nav-item" href="index.html#excel">
+            <span class="icon" aria-hidden="true">▦</span>
+            Excel Files
+          </a>
+          <a class="nav-item active" href="index.html#data-sources">
+            <span class="icon" aria-hidden="true">◍</span>
+            Data Sources
+          </a>
+          <a class="nav-item" href="index.html#docs">
+            <span class="icon" aria-hidden="true">☰</span>
+            Documents
+          </a>
+          <a class="nav-item" href="sop.html">
+            <span class="icon" aria-hidden="true">&#9783;</span>
+            SOP Zendesk
+          </a>
+          <a class="nav-item" href="https://indthandbook.com/login/" target="_blank" rel="noopener noreferrer">
+            <span class="icon" aria-hidden="true">&#9782;</span>
+            Employee Handbook
+          </a>
+        </nav>
+
+        <div class="sidebar-note">
+          <p>IND Technology</p>
+          <span>Data team workspace</span>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Data Sources</p>
+            <h2>Customer Management Spreadsheet</h2>
+          </div>
+          <a class="primary-button" href="index.html">&#8592; Back to hub</a>
+        </header>
+
+        <section class="toolbar" aria-label="Search">
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input id="customerSearch" type="search" placeholder="Search customers..." />
+          </label>
+        </section>
+
+        <section class="content-grid" style="grid-template-columns: 1fr;">
+          <div class="resource-area">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Library</p>
+              <h3>Customer spreadsheets</h3>
+            </div>
+            <span id="customerCount">0 items</span>
+          </div>
+          <div class="resource-grid" id="customerList" aria-live="polite"></div>
+          <div class="empty-state" id="customerEmpty" hidden>
+            <h3>No matching customers</h3>
+            <p>Try a different keyword.</p>
+          </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      // Replace each name and url with the real customer name and Excel link
+      const customerSheets = [
+        { name: "1", url: "#" },
+        { name: "2", url: "#" },
+        { name: "3", url: "#" },
+        { name: "4", url: "#" },
+        { name: "5", url: "#" },
+        { name: "6", url: "#" },
+        { name: "7", url: "#" },
+        { name: "8", url: "#" },
+        { name: "9", url: "#" },
+        { name: "10", url: "#" },
+        { name: "11", url: "#" },
+        { name: "12", url: "#" },
+        { name: "13", url: "#" },
+        { name: "14", url: "#" },
+        { name: "15", url: "#" },
+        { name: "16", url: "#" },
+        { name: "17", url: "#" },
+        { name: "18", url: "#" },
+        { name: "19", url: "#" },
+        { name: "20", url: "#" },
+        { name: "21", url: "#" },
+        { name: "22", url: "#" },
+        { name: "23", url: "#" },
+        { name: "24", url: "#" },
+        { name: "25", url: "#" },
+        { name: "26", url: "#" },
+        { name: "27", url: "#" },
+        { name: "28", url: "#" },
+        { name: "29", url: "#" },
+        { name: "30", url: "#" },
+        { name: "31", url: "#" },
+        { name: "32", url: "#" },
+        { name: "33", url: "#" },
+        { name: "34", url: "#" },
+        { name: "35", url: "#" },
+        { name: "36", url: "#" },
+        { name: "37", url: "#" },
+        { name: "38", url: "#" },
+        { name: "39", url: "#" },
+        { name: "40", url: "#" },
+        { name: "41", url: "#" },
+        { name: "42", url: "#" },
+        { name: "43", url: "#" },
+        { name: "44", url: "#" },
+        { name: "45", url: "#" }
+      ];
+
+      const list = document.querySelector("#customerList");
+      const search = document.querySelector("#customerSearch");
+      const count = document.querySelector("#customerCount");
+      const empty = document.querySelector("#customerEmpty");
+
+      function escapeHtml(value) {
+        return String(value ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function safeUrl(url) {
+        try {
+          const parsed = new URL(url);
+          return parsed.protocol === "https:" ? parsed.href : "";
+        } catch {
+          return "";
+        }
+      }
+
+      function renderCustomers() {
+        const keyword = search.value.trim().toLowerCase();
+        const visible = customerSheets.filter((item) => item.name.toLowerCase().includes(keyword));
+        count.textContent = `${visible.length} ${visible.length === 1 ? "item" : "items"}`;
+        empty.hidden = visible.length > 0;
+        list.innerHTML = visible
+          .map((item) => {
+            const url = safeUrl(item.url);
+            const action = url
+              ? `<a class="open-link" href="${escapeHtml(url)}" target="_blank" rel="noreferrer">Open</a>`
+              : `<a class="open-link" href="#" onclick="return false">Open</a>`;
+            return `
+              <article class="resource-card">
+                <div class="card-top">
+                  <div class="card-icon" aria-hidden="true">XL</div>
+                  <div><h4>${escapeHtml(item.name)}</h4></div>
+                </div>
+                <div class="meta-row">
+                  <span>Excel</span>
+                  <span>Data Team</span>
+                </div>
+                ${action}
+              </article>`;
+          })
+          .join("");
+      }
+
+      search.addEventListener("input", renderCustomers);
+      renderCustomers();
+    </script>
+  </body>
+</html>
