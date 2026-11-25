@@ -10,6 +10,15 @@
     featured: true
   },
   {
+    name: "Kakitangan",
+    category: "Staff Welfare",
+    url: "https://kakitangan.com/",
+    owner: "Data Team",
+    description: "Your Payroll, Benefits, Employee Information and Much More.",
+    pinned: true,
+    featured: true
+  },
+    {
     name: "Pole Pinning & Excel 360 Tool",
     category: "Automation",
     url: "#",
